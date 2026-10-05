@@ -17,7 +17,7 @@ exclude = [
 
 # Must be explicit: a standalone ruff.toml does NOT inherit requires-python from
 # pyproject.toml, so without this ruff guesses the wrong modernization target.
-target-version = "py312"
+target-version = "py313"
 line-length = 88
 
 [lint]

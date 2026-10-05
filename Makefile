@@ -16,7 +16,7 @@ help:
 	@echo "  make clean         - Remove caches"
 
 install:
-	uv sync --all-extras
+	uv sync --locked --all-extras
 
 check: lint format typecheck test
 

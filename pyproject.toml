@@ -1,0 +1,58 @@
+[project]
+name = "studybell-bot"
+version = "0.1.0"
+description = "Telegram bot that reminds students about deadlines, schedules and events"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.31.0",
+    "aiosqlite>=0.22.1",
+    "alembic>=1.20.0",
+    "apscheduler>=3.11.3",
+    "fastapi>=0.142.2",
+    "pydantic-settings",
+    "sqlalchemy[asyncio]>=2.0.54",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "mypy>=2.3.1",
+    "pre-commit>=4.6.2",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    # Exact pin, and it must match `rev` for ruff-pre-commit in
+    # .pre-commit-config.yaml: a floating linter means CI can fail on the day a
+    # new rule lands, and pre-commit disagreeing with `make lint` is worse.
+    "ruff==0.16.8",
+]
+
+[tool.uv]
+# The one place the uv version floor is stated. uv refuses to run below it, and
+# CI reads it with `version-file: pyproject.toml`, resolving to the highest
+# release that satisfies it. A floor, not a pin: `uv audit` needs >= 0.12, and
+# contributors should not be blocked from a newer uv. The Dockerfile's
+# `ghcr.io/astral-sh/uv:<tag>` cannot read a file, so it names one exact version
+# for reproducible images — that tag has to satisfy this floor; this field leads.
+required-version = ">=0.12.11"
+
+[tool.mypy]
+strict = true
+exclude = ["^frontend/", "^\\.venv/"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+# Tests import the `app` package; the project is not installed as a package
+# (uvicorn runs it from the working directory), so put the repo root on sys.path.
+pythonpath = ["."]
+addopts = "--cov=app --cov-fail-under=85"
+
+[tool.coverage.run]
+# __init__.py files are only re-exports; migrations live outside app/.
+omit = ["*/__init__.py"]
+# sysmon (Python 3.12+ sys.monitoring) traces async coroutine bodies correctly;
+# the default ctrace tracer under-counts code awaited inside FastAPI routes.
+core = "sysmon"

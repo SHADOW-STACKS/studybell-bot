@@ -9,5 +9,16 @@
       "Read(./.env.development)",
       "Read(./.env.production)"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "filesystem": {
+      "denyRead": [
+        "./.env",
+        "./.env.local",
+        "./.env.development",
+        "./.env.production"
+      ]
+    }
   }
 }
