@@ -1,0 +1,13 @@
+{
+  "enabledPlugins": {
+    "mattpocock-skills@claude-plugins-official": true
+  },
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.development)",
+      "Read(./.env.production)"
+    ]
+  }
+}
