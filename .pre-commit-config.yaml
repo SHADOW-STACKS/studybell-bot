@@ -7,6 +7,8 @@ repos:
       - id: check-yaml
       - id: check-toml
       - id: check-json
+        # tsconfig files are JSONC (comments allowed); strict JSON parsing rejects them.
+        exclude: ^frontend/tsconfig.*\.json$
       - id: check-merge-conflict
       - id: check-added-large-files
       - id: detect-private-key
@@ -34,3 +36,12 @@ repos:
         types: [python]
         pass_filenames: false
         args: [.]
+      # Same gate as `make check` and CI; the target itself skips until
+      # frontend/ has a package.json, so Python-only work is never blocked.
+      - id: frontend-check
+        name: frontend lint + format
+        entry: make frontend-check
+        language: system
+        files: ^frontend/
+        exclude: ^frontend/package-lock\.json$
+        pass_filenames: false

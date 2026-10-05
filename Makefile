@@ -1,4 +1,4 @@
-.PHONY: help install check fix lint format typecheck test clean
+.PHONY: help install check fix lint format typecheck test frontend-check clean
 
 help:
 	@echo "Project Commands"
@@ -7,18 +7,19 @@ help:
 	@echo "  make install       - Install dependencies with uv"
 	@echo ""
 	@echo "Code Quality:"
-	@echo "  make check         - Run all checks (lint + format + types + tests)"
+	@echo "  make check         - Run all checks (lint + format + types + tests + frontend)"
 	@echo "  make fix           - Auto-fix lint and format issues"
 	@echo "  make lint          - Run linter (ruff check)"
 	@echo "  make format        - Check formatting (ruff format --check)"
 	@echo "  make typecheck     - Run type checker (mypy)"
 	@echo "  make test          - Run tests"
+	@echo "  make frontend-check - Lint, format check and build the frontend"
 	@echo "  make clean         - Remove caches"
 
 install:
 	uv sync --locked --all-extras
 
-check: lint format typecheck test
+check: lint format typecheck test frontend-check
 
 fix:
 	uv run ruff check --fix .
@@ -40,6 +41,12 @@ test:
 	@if [ -n "$$(find tests -name '*.py' 2>/dev/null | head -n 1)" ]; then \
 		uv run pytest tests/ -v; \
 	else echo "test: no Python files in tests/, skipped"; fi
+
+# Skips until frontend/ is scaffolded; needs `npm ci` in frontend/ beforehand.
+frontend-check:
+	@if [ -f frontend/package.json ]; then \
+		cd frontend && npm run lint && npm run format:check && npm run build; \
+	else echo "frontend-check: no frontend/package.json, skipped"; fi
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +

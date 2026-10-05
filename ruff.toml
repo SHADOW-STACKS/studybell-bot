@@ -35,12 +35,17 @@ select = [
     "S",    # flake8-bandit — common security issues
     "C4",   # flake8-comprehensions
     "RUF",  # ruff-specific rules
+    "C901", # cyclomatic complexity (python-core.md: under 12)
+    "PLR0913", # too many function arguments (python-core.md: at most 7)
 ]
 
 # Every ignore states its reason. Add/remove per project; don't carry blindly.
 ignore = [
     "E501",   # line length is the formatter's job, not a lint error
     "B008",   # function call in default arg — required by FastAPI Depends()
+    "RUF001", # the bot talks to students in Russian: Cyrillic letters that look
+    "RUF002", # like Latin ones are flagged in strings, docstrings and comments
+    "RUF003", # (e.g. "о"); the text is intentional, not a homoglyph typo
     "RUF012", # mutable class attributes — SQLAlchemy declarative models trip this
 ]
 
