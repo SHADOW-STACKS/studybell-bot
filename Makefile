@@ -30,11 +30,16 @@ lint:
 format:
 	uv run ruff format --check .
 
+# mypy and pytest exit non-zero on an empty tree; same guard as in ci.yml.
 typecheck:
-	uv run mypy .
+	@if [ -n "$$(find app -name '*.py' 2>/dev/null | head -n 1)" ]; then \
+		uv run mypy .; \
+	else echo "typecheck: no Python files in app/, skipped"; fi
 
 test:
-	uv run pytest tests/ -v
+	@if [ -n "$$(find tests -name '*.py' 2>/dev/null | head -n 1)" ]; then \
+		uv run pytest tests/ -v; \
+	else echo "test: no Python files in tests/, skipped"; fi
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +

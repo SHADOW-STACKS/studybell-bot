@@ -11,7 +11,7 @@ dependencies = [
     "alembic>=1.20.0",
     "apscheduler>=3.11.3",
     "fastapi>=0.142.2",
-    "pydantic-settings",
+    "pydantic-settings>=2.15.0",
     "sqlalchemy[asyncio]>=2.0.54",
     "uvicorn[standard]>=0.54.0",
 ]
@@ -41,7 +41,7 @@ required-version = ">=0.12.11"
 
 [tool.mypy]
 strict = true
-exclude = ["^frontend/", "^\\.venv/"]
+exclude = ["^\\.venv/"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

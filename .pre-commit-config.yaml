@@ -7,8 +7,6 @@ repos:
       - id: check-yaml
       - id: check-toml
       - id: check-json
-        # tsconfig files are JSONC (comments allowed); strict JSON parsing rejects them.
-        exclude: ^frontend/tsconfig.*\.json$
       - id: check-merge-conflict
       - id: check-added-large-files
       - id: detect-private-key
@@ -36,13 +34,3 @@ repos:
         types: [python]
         pass_filenames: false
         args: [.]
-      # Frontend: same gate as the backend, scoped to frontend/ so Python-only
-      # commits don't pay for it. Requires `npm ci` to have run once.
-      # Skips until frontend/ has a package.json (it only holds a .gitkeep before).
-      - id: frontend-lint
-        name: frontend lint + format
-        entry: bash -c '[ -f frontend/package.json ] || exit 0; cd frontend && npm run lint && npm run format:check'
-        language: system
-        files: ^frontend/
-        exclude: ^frontend/package-lock\.json$
-        pass_filenames: false

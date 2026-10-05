@@ -13,12 +13,6 @@ dist/
 coverage.xml
 htmlcov/
 
-# Node
-node_modules/
-frontend/dist/
-frontend/coverage/
-*.tsbuildinfo
-
 # Secrets and local config — only .env.example is tracked
 .env
 .env.*
