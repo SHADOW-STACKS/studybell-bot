@@ -12,6 +12,7 @@
   },
   "sandbox": {
     "enabled": true,
+    "excludedCommands": ["git *"],
     "filesystem": {
       "denyRead": [
         "./.env",
