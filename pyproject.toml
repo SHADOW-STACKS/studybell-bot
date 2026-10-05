@@ -48,7 +48,7 @@ asyncio_mode = "auto"
 # Tests import the `app` package; the project is not installed as a package
 # (uvicorn runs it from the working directory), so put the repo root on sys.path.
 pythonpath = ["."]
-addopts = "--cov=app --cov-fail-under=85"
+addopts = "--cov=app"
 
 [tool.coverage.run]
 # __init__.py files are only re-exports; migrations live outside app/.

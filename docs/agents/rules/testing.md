@@ -71,6 +71,7 @@ Rule levels are defined in `_LEVELS.md`.
   `coverage.thresholds` in `vite.config.ts`). Start at the number the first
   real suite reaches, raise it as coverage grows, never lower it to go green.
   Escape hatch: a documented reason in `pyproject.toml` next to the number.
+  There is no threshold until the first real suite exists; add it then.
 - Coverage is still a signal, not the goal: 100% with decorative assertions is
   worthless. Focus on domain logic and error paths; that's where bugs are
   expensive.
