@@ -17,8 +17,10 @@ Read the rest before working in their area:
 | FastAPI service, async SQLAlchemy, migrations | `docs/agents/rules/backend-fastapi.md` |
 | `frontend/` (Vue 3 + TypeScript) | `docs/agents/rules/frontend-vue.md` |
 
-`docs/agents/rules/clean-architecture.md` is not applied: the project uses the
-lighter layering from `backend-fastapi.md`.
+Layers follow the spec: data, business logic, interface. There are two
+interfaces, aiogram handlers (bot) and FastAPI routers (student statistics API);
+both only call services and hold no business logic. `backend-fastapi.md` covers
+the FastAPI interface and the shared service/DB rules.
 
 ## Subagents
 
