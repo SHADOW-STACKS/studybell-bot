@@ -1,0 +1,26 @@
+# Dependabot keeps the pins fresh; it is not the vulnerability gate — that is
+# the `audit` job in ci.yml (`uv audit`), which blocks merges.
+# Dependabot updates the SHA pins of actions (and the version comment next to
+# them) and the lockfile. Ecosystems are added together with their manifests:
+# Dependabot reports an error for one whose directory does not exist yet.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly
+    # Don't propose a version the day it ships; CI would still catch a bad one,
+    # but a week of soak is cheap. Match `exclude-newer` in pyproject if set.
+    cooldown:
+      default-days: 7
+    groups:
+      python-minor-and-patch:
+        update-types: ["minor", "patch"]
