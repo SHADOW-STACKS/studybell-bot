@@ -20,6 +20,14 @@ Read the rest before working in their area:
 `docs/agents/rules/clean-architecture.md` is not applied: the project uses the
 lighter layering from `backend-fastapi.md`.
 
+## Subagents
+
+Delegate to the project subagents in `.claude/agents/` instead of doing it inline:
+
+- `test-runner` — after a batch of edits, to get the `make check` verdict.
+- `scout` — for lookups whose answer is a few paths and facts.
+- `doc-updater` — for documentation edits whose content is already decided.
+
 ## Agent skills
 
 ### Issue tracker
