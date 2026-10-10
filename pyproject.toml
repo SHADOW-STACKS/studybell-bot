@@ -41,6 +41,8 @@ required-version = ">=0.12.11"
 
 [tool.mypy]
 strict = true
+# Teaches mypy pydantic-settings init arguments such as `_env_file`.
+plugins = ["pydantic.mypy"]
 exclude = ["^frontend/", "^\\.venv/"]
 
 [tool.pytest.ini_options]
@@ -52,7 +54,8 @@ addopts = "--cov=app --cov-fail-under=85"
 
 [tool.coverage.run]
 # __init__.py files are only re-exports; migrations live outside app/.
-omit = ["*/__init__.py"]
+# app/__main__.py only calls app.main.main(), which needs a live Telegram API.
+omit = ["*/__init__.py", "app/__main__.py"]
 # sysmon (Python 3.12+ sys.monitoring) traces async coroutine bodies correctly;
 # the default ctrace tracer under-counts code awaited inside FastAPI routes.
 core = "sysmon"
